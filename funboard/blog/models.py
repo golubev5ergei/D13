@@ -19,6 +19,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique_for_date='publish')
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog-posts+', null=True)
+    cat = models.ForeignKey('Category', on_delete=models.CASCADE, null=True)
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
@@ -61,3 +62,30 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'Comment by {self.name} on {self.post}'
+
+
+CATEGORIES = (
+    ('Tanks', 'Танки'),
+    ('Hill', 'Хилы'),
+    ('DD', 'ДД'),
+    ('Merchants', 'Торговцы'),
+    ('Guildmaster', 'Гилдмастеры'),
+    ('Questgivers', 'Квестгиверы'),
+    ('Blacksmith', 'Кузнецы'),
+    ('Leatherman', 'Кожевники'),
+    ('Potionist', 'Зельевары'),
+    ('SpellMaster', 'Мастера заклинаний'),
+
+)
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=250, choices=CATEGORIES, blank=False, default=None)
+
+    def __str__(self):
+        return dict(CATEGORIES)[self.name]
+    
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+        ordering = ['id']

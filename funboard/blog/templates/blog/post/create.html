@@ -1,0 +1,18 @@
+{% extends 'blog/base.html' %}
+{% block title %}Добавление поста{% endblock %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1>Форма добавления</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.title }}<br>
+            {{ form.body }}<br>
+            {{ form.cat }}
+            {{ form.status }}
+            <button class="btn btn-success" type="submit">Добавить пост</button>
+            <span>{{ error }}</span>
+    {% else %}
+        Пройдите регистрацию или войдите под своей учетной записью
+    {% endif %}
+  </form>
+{% endblock %}
