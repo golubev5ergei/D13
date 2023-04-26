@@ -4,8 +4,18 @@
     <h1>{{ post.title }}</h1>
     <p class="date"> Опубликовано {{ post.publish }}  {{ post.author }} <strong>Ктегория {{ post.cat }}</strong></p>
     {{ post.body|linebreaks }}
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" width="500">
+        {% endif %}
+
+        {% if post.video %}
+            <video width="320" height="240" controls>
+            <source src="{{ post.video }}" type="video/mp4">
+            Your browser does not support the video tag.
+            </video>
+        {% endif %}
     <p>
-        <a href="{% url 'blog:post_share' post.id %}">Share this post</a>
+        <a href="{% url 'blog:post_share' post.id %}">Поделиться</a>
     </p>
     {% with comments.count as total_comments %}
         <h2>{{ total_comments }} comment{{ total_comments|pluralize }}</h2>
@@ -19,8 +29,11 @@
             {{ comment.body|linebreaks }}
         </div>
         {% empty %}
-        <p>There are no comments.</p>
-        <a href="{% url 'blog:post_update' post.id %}" class="btn btn-primary">Редактировать</a>    
+        <p>Нет комментариев к посту.</p>
+        {% if user.is_authenticated and request.user.username == post.author.username %}
+        <a href="{% url 'blog:post_delete' post.id %}" class="btn btn-danger">Удалить пост</a>
+        <a href="{% url 'blog:post_update' post.id %}" class="btn btn-primary">Редактировать</a>
+        {% endif %}    
     {% endfor %}
     <div>
         {% include "blog/post/includes/comment_form.html" %}    

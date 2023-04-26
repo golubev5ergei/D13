@@ -18,9 +18,11 @@ class Post(models.Model):
 
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique_for_date='publish')
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog-posts+', null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts', null=True)
     cat = models.ForeignKey('Category', on_delete=models.CASCADE, null=True)
     body = models.TextField()
+    image = models.ImageField(upload_to='media', null=True, blank=True)
+    video_url = models.URLField(null=True, blank=True)
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

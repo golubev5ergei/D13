@@ -22,21 +22,23 @@ class PostForm(forms.ModelForm):
     def __init__(self, *args, **kargs):
         super().__init__(*args, **kargs)
         self.fields['cat'].empty_label = 'Категория не выбрана'
+        
 
     class Meta:
         model = Post
-        fields = ['title', 'body', 'cat', 'status']
+        fields = ['title', 'body', 'cat', 'status', 'image', 'video_url']
         widgets = {
             'title': forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'Заголовок поста'
             }),
 
-            'content': forms.Textarea(attrs={
+            'body': forms.Textarea(attrs={
             'class': 'form-control',
             'placeholder': 'Текст поста'
             }),
-
+            
+            'image': forms.FileInput
         }
 
 

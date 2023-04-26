@@ -9,7 +9,9 @@
         <p class="date"> Опубликовано {{ post.publish }}  {{ post.author }} <strong>Ктегория {{ post.cat }}</strong></p>
         {{ post.body|truncatewords:30|linebreaks }}
         {% endfor %}
+        {% if user.is_authenticated %}
         <a href="{% url 'blog:post_add' %}" class="btn btn-primary">Добавить пост</a>
+        {% endif %}
         {% include 'blog/pagination.html' with page=page_obj %}
 
 {% endblock %}

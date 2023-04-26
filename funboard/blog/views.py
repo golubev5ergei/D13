@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponseRedirect
 from .models import Post, Comment
 from django.views.generic.edit import FormMixin
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, TemplateView, View
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, TemplateView, View, DeleteView
 from .forms import EmailPostForm, CommentForm, PostForm, RegisterUserForm, LoginUserForm
 from django.core.mail import send_mail
 from django.views.decorators.http import require_POST
@@ -14,6 +15,7 @@ from django.utils.encoding import force_bytes
 from django.contrib.sites.models import Site
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
@@ -56,35 +58,29 @@ class PostDetail(FormMixin, DetailView):
         return context
 
 
-class PostAdd(CreateView):
+class PostAdd(LoginRequiredMixin, CreateView):
     template_name = 'blog/post/create.html'
     form_class = PostForm
     success_url = reverse_lazy('blog:post_list')
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
-class PostUpdate(UpdateView):
+
+class PostUpdate(LoginRequiredMixin, UpdateView):
     model = Post
     template_name = 'blog/post/create.html'
     form_class = PostForm
     success_url = reverse_lazy('blog:post_list')
 
 
+class PostDelete(LoginRequiredMixin, DeleteView):
+    model = Post
+    template_name = 'blog/post/delete.html'
+    success_url = reverse_lazy('blog:post_list')
 
-
-# def post_detail(request, year, month, day, post):
-#     post = get_object_or_404(Post, status=Post.Status.PUBLISHED,
-#                              slug = post,
-#                              publish__year = year,
-#                              publish__month = month,
-#                              publish__day = day)
-#     comments = post.comments.filter(active=True)
-#     form = CommentForm
-#     return render(request, 'blog/post/detail.html', {'post':post,
-#                                                      'comments':comments,
-#                                                      'form':form
-#                                                      })
-
-
+        
 def post_share(request, post_id):
     # Извлечь пост по его идентификатору id
     post = get_object_or_404(Post,
