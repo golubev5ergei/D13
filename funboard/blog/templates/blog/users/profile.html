@@ -1,0 +1,22 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <div class="content-section">
+        <div class="media">
+            <img class="accaunt-img" width="400px" height="400px" src="{{ user.userprofile.image.url }}" alt="">
+            <div class="media-body">
+                <h2 class="accaunt-heading">{{ user.username }}</h2>
+                <p class="text-secondary">{{ user.email }}</p>
+            </div>
+            <h2>Мои посты:</h2>
+            {% for p in posts %}
+            <div class="container">
+                <p class="row" >{{ p }}</p>
+                {% for com in comments %}
+                <p class="comment">{{ com.body }} | {{ com.name }}</p>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock content %}

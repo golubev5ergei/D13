@@ -21,7 +21,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts', null=True)
     cat = models.ForeignKey('Category', on_delete=models.CASCADE, null=True)
     body = models.TextField()
-    image = models.ImageField(upload_to='media', null=True, blank=True)
+    image = models.ImageField(null=True, blank=True)
     video_url = models.URLField(null=True, blank=True)
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
@@ -91,3 +91,11 @@ class Category(models.Model):
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
         ordering = ['id']
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(default='default.png', upload_to='profile_img')
+
+    def __str__(self):
+        return f'{self.user.username} Profile'

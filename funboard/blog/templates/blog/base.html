@@ -14,7 +14,10 @@
                 <a class="nav-link active" aria-current="page" href="/">Home</a>
               </li>
               {% if request.user.is_authenticated %}
-              <li class="nav-link">Вы вошли как: {{ user.username }} | <a href="{% url 'blog:logout' %}">Logout</a></li>
+              <li class="nav-link px-5">Вы вошли как: {{ user.username }}  <a href="{% url 'blog:logout' %}">Выйти</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'blog:profile' %}">Профиль</a>
+              </li>
               {% else %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'blog:login' %}">Login</a>

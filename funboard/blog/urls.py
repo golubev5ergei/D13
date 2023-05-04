@@ -13,6 +13,7 @@ urlpatterns = [
     path('post_delete/<int:pk>/', views.PostDelete.as_view(), name='post_delete'),
     path('register', views.RegisterUser.as_view(), name='register'),
     path('login', views.LoginUser.as_view(), name='login'),
+    path('profile', views.profile, name='profile'),
     path('logout', views.logout_user, name='logout'),
     # path('<int:year>/<int:month>/<int:day>/<slug:post>/', views.post_detail, name='post_detail'),
     path('<int:post_id>/share/', views.post_share, name='post_share'),

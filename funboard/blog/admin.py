@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Comment, Category
+from .models import Post, Comment, Category, UserProfile
 
 
 @admin.register(Post)
@@ -23,4 +23,8 @@ class CommentAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name',]
 
+
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    pass
 

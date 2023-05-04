@@ -1,7 +1,7 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-<h1>Регистрация</h1>
+<h1>Войти на сайт</h1>
 <form method="post">
     {% csrf_token %}
     <div class="errorlist">{{ form.non_field_errors }}</div>

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
-from .models import Post, Comment
+from .models import Post, Comment, UserProfile
 from django.views.generic.edit import FormMixin
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, TemplateView, View, DeleteView
 from .forms import EmailPostForm, CommentForm, PostForm, RegisterUserForm, LoginUserForm
@@ -16,6 +16,7 @@ from django.contrib.sites.models import Site
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -174,6 +175,16 @@ def logout_user(request):
     logout(request)
     return redirect('blog:login')
 
+@login_required
+def profile(request):
+    user_posts = Post.objects.filter(author=request.user)
+    post_ids = user_posts.values_list('id', flat=True)
+    post_comment = Comment.objects.filter(post__id__in=post_ids)
+    context = {
+        'posts': user_posts,
+        'comments': post_comment,
+    }
+    return render(request, 'blog/users/profile.html', context)
 
 User = get_user_model()
 
