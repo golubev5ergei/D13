@@ -5,12 +5,12 @@
     <p class="date"> Опубликовано {{ post.publish }}  {{ post.author }} <strong>Ктегория {{ post.cat }}</strong></p>
     {{ post.body|linebreaks }}
         {% if post.image %}
-            <img src="{{ post.image.url }}" alt="{{ post.title }}" width="500">
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" width="800" height="600">
         {% endif %}
 
         {% if post.video %}
-            <video width="320" height="240" controls>
-            <source src="{{ post.video }}" type="video/mp4">
+            <video width="800" height="600" controls>
+            <source src="{{ post.video.url }}" type="video/mp4">
             Your browser does not support the video tag.
             </video>
         {% endif %}
@@ -36,7 +36,9 @@
         {% endif %}    
     {% endfor %}
     <div>
-        {% include "blog/post/includes/comment_form.html" %}    
+        {% if user.is_authenticated %}
+        {% include "blog/post/includes/comment_form.html" %}
+        {% endif %}    
     </div>
     
     

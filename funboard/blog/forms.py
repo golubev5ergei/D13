@@ -15,7 +15,7 @@ class EmailPostForm(forms.Form):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['name', 'email', 'body']
+        fields = ['body',]
 
 
 class PostForm(forms.ModelForm):
@@ -26,7 +26,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['title', 'body', 'cat', 'status', 'image', 'video_url']
+        fields = ['title', 'body', 'cat', 'status', 'image', 'video']
         widgets = {
             'title': forms.TextInput(attrs={
             'class': 'form-control',

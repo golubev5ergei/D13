@@ -22,7 +22,7 @@ class Post(models.Model):
     cat = models.ForeignKey('Category', on_delete=models.CASCADE, null=True)
     body = models.TextField()
     image = models.ImageField(null=True, blank=True)
-    video_url = models.URLField(null=True, blank=True)
+    video = models.FileField(upload_to='video/', null=True, blank=True)
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

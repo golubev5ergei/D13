@@ -10,7 +10,7 @@
             <h2>Мои посты:</h2>
             {% for p in posts %}
             <div class="container">
-                <p class="row" >{{ p }}</p>
+                <h2 class="row" >{{ p }}</h2>
                 {% for com in comments %}
                 <p class="comment">{{ com.body }} | {{ com.name }}</p>
                 {% endfor %}
